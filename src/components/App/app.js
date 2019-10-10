@@ -25,7 +25,7 @@ class App extends Component {
   
     render () {
       let bodyContent = <StoryList videos={this.state.videos} />;
-      console.log(this.state.dataMissing);
+
       if(this.state.dataMissing) {
         bodyContent = 'Data is missing...';
       }
@@ -51,7 +51,6 @@ class App extends Component {
 
     fetch(endpoint)
     .then(response => {
-      console.log(response);
         return response.json()
     })
     .then((data) => {
@@ -59,10 +58,10 @@ class App extends Component {
         return item.snippet;
       });
 
-      this.setState({videos: snippets});
+      this.setState({videos: snippets, dataMissing: false});
     })
     .catch((e) => {
-      console.log('fail....');
+      this.setState({dataMissing: true});
     });
   }
 }
